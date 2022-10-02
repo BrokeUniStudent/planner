@@ -1,0 +1,29 @@
+.menu{
+    height: 100%;
+    width: 15%;
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(46, 46, 46);
+}
+
+h1{
+    color: white;
+    margin-top: 0%;
+}
+
+.menu_bt{
+    float: top;
+    text-align: center;
+    border-width: 1px;
+    border-color: rgb(46, 46, 46);
+    border-style: solid;
+}
+
+.menu_bt_container{
+    height: 80%;
+    border-radius: 10px;
+    border-color: darkgray;
+    border-width: 10px;
+    border-right-width: 5px;
+    background-color: white;
+}

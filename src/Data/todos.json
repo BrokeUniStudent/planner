@@ -1,0 +1,41 @@
+[
+  {
+    "id": 0,
+    "task": "Give dog a bath",
+    "deadline": "2022-12-17T03:24:00",
+    "project": "Chores",
+    "completed": true
+  },
+  {
+    "id": 1,
+    "task": "Do laundry",
+    "deadline": "2022-06-23T03:24:00",
+    "project": "Chores",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "task": "Vacuum floor",
+    "project": "Chores",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "task": "Take nap",
+    "deadline": "2022-06-25T03:24:00",
+    "project": "Relaxation",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "task": "Read book",
+    "project": "Relaxation",
+    "completed": false
+  },
+  {
+    "id": 5,
+    "task": "Exercise",
+    "project": "Relaxation",
+    "completed": false
+  }
+]
