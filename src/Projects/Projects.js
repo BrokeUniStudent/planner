@@ -2,6 +2,7 @@ import './Projects.css';
 import listTodos from './../Data/todos.json';
 import { useState, useEffect } from 'react';
 import Project from './Project';
+import { Typography } from '@mui/material';
 
 function Projects() {
     const [todos, setTodos] = useState(listTodos);
@@ -93,7 +94,7 @@ function Projects() {
 
     return (
         <div className='projects'>
-        <h1>Projects</h1>
+        <Typography variant='h2'>Projects</Typography>
         <button className='addProject'>Add Project</button>
         {listProjects.map(project => 
             {   

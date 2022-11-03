@@ -1,4 +1,5 @@
-import './Home.css';
+// import './Home.css';
+import { MenuItem, Typography, Select } from '@mui/material';
 import { useState, useEffect } from 'react';
 import HomeToDoList from './HomeToDoList.js';
 
@@ -74,16 +75,16 @@ function Home() {
 
     return (
         <div>
-            <h1>Home</h1>
+            <Typography variant='h2'>Home</Typography>
             <div className='clock date'>{calendarDate}</div>
             <div className='clock time'>{time}</div>
 
             <label for="selectTimeZone">Time Zone</label>
-            <select id="selectTimeZone" value={timeZone} onChange={changeTimeZone}>
-                <option value="Asia/Shanghai">Beijing</option>
-                <option value="Europe/London">London</option>
-                <option value="Australia/Adelaide">Adelaide</option>
-            </select>
+            <Select id="selectTimeZone" value={timeZone} onChange={changeTimeZone}>
+                <MenuItem value="Asia/Shanghai">Beijing</MenuItem>
+                <MenuItem value="Europe/London">London</MenuItem>
+                <MenuItem value="Australia/Adelaide">Adelaide</MenuItem>
+            </Select>
 
             <HomeToDoList type="daily" timeZoneOffset={timeZoneOffset} />
             <HomeToDoList type="weekly" timeZoneOffset={timeZoneOffset} />

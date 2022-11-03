@@ -1,5 +1,11 @@
 import './HomeToDo.css';
 import { useState } from 'react';
+import { ListItem } from '@mui/material';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
 
 function HomeToDo(props) {
 
@@ -38,11 +44,24 @@ function HomeToDo(props) {
 
 
     return (
-        <div className='homeToDo'>
-            <input type="radio" id={todo.id} onClick={handleClick} checked={todo.completed} className={todo.completed ? "completed" : null} />
+        <ListItemButton className='homeToDo' onClick={handleClick}>
+            {/* <input type="radio" id={todo.id} onClick={handleClick} checked={todo.completed} className={todo.completed ? "completed" : null} />
             <label for={todo.id}>{todo.task}</label>
-            <p>{displayTime}</p>
-        </div>
+            <p>{displayTime}</p> */}
+            <ListItemIcon>
+                    <Checkbox
+                    edge="start"
+                    checked={todo.completed}
+                    tabIndex={-1}
+                    disableRipple
+                    // onClick={updateCompleted}
+                    />
+                </ListItemIcon>
+                <ListItemText>
+                    {todo.task}
+                </ListItemText>
+                <ListItemText>{todo.deadline ? <p>{displayTime}</p>: null}</ListItemText>
+        </ListItemButton>
     );
 }
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './HomeToDoList.css';
 import HomeToDo from "./HomeToDo.js"
 import todoList from './../Data/todos.json';
+import { List } from '@mui/material';
 
 function HomeToDoList(props) {
 
@@ -41,12 +42,12 @@ function HomeToDoList(props) {
     }
 
     return (
-        <div className='homeToDoList'>
+        <List className='homeToDoList'>
             {/* title */}
             <h1 className='homeToDoList'>{(props.type === "daily") ? "Today..." : "In a week..."}</h1>
             {/* todos */}
             {listTodos.map(todo => <HomeToDo todo={todo} key={todo.id} type={props.type} updateToDo={updateToDo} timeZoneOffset={props.timeZoneOffset} />)}
-        </div>
+        </List>
     );
 }
 
