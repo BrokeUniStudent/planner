@@ -6,6 +6,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+
+// dayjs.extend(utc)
+// dayjs.extend(timezone)
 
 function HomeToDo(props) {
 
@@ -18,29 +25,18 @@ function HomeToDo(props) {
 
     var displayTime = "";
 
-    const date = new Date(todo.deadline);
-    // add offest in seconds
-    date.setSeconds(date.getSeconds()+props.timeZoneOffset)
+    const deadline = dayjs(props.todo.deadline).tz(props.todo.timezone)
 
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-
-    if (props.type === "daily"){
-        displayTime = h + ":" + m;
+    if (props.type === "day") {
+        displayTime = deadline.format('HH:MM')
     } else {
-        var y = date.getFullYear();// year
-        var mon = date.getMonth()+1;// month
-        var d = date.getDate();// day
-
-        mon = (mon < 10) ? "0" + mon : mon;
-        d = (d < 10) ? "0" + d : d;
-
-        displayTime = h + ":" + m + " " + d + "/" + mon + "/" + y;
+        displayTime = deadline.format('YYYY/MM/DD ddd');
     }
+
     
+
+    const isOverdue = dayjs().tz().isAfter(deadline) && !props.todo.completed
+
 
 
     return (
@@ -49,18 +45,20 @@ function HomeToDo(props) {
             <label for={todo.id}>{todo.task}</label>
             <p>{displayTime}</p> */}
             <ListItemIcon>
-                    <Checkbox
+                <Checkbox
                     edge="start"
                     checked={todo.completed}
                     tabIndex={-1}
                     disableRipple
-                    // onClick={updateCompleted}
-                    />
-                </ListItemIcon>
-                <ListItemText>
-                    {todo.task}
-                </ListItemText>
-                <ListItemText>{todo.deadline ? <p>{displayTime}</p>: null}</ListItemText>
+                // onClick={updateCompleted}
+                />
+                {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
+            </ListItemIcon>
+            <ListItemText>
+                
+                {todo.task}
+            </ListItemText>
+            <ListItemText>{todo.deadline ? <p>{displayTime}</p> : null}</ListItemText>
         </ListItemButton>
     );
 }

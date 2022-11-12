@@ -3,46 +3,75 @@ import Menu from './Menu/Menu.js'
 import Home from './Home/Home.js'
 import Projects from './Projects/Projects.js'
 import Calendar from './Calendar/Calendar.js'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
+import { ForkRight } from '@mui/icons-material';
 
 function App() {
   const [main, setMain] = useState(<Home />);
+  const [title, setTitle] = useState('Home');
 
-  const drawerWidth= 250;
+  const drawerWidth = 200;
 
-  const changePanel = (panelName) =>{
+  const panelIndexToName = {
+    0: 'Home',
+    1: 'Projects',
+    2: 'Calendar'
+  }
+
+  const changePanel = (panelIndex) => {
     // console.log(panelName);
-    switch (panelName){
-      case "home":
+    const panelName = panelIndexToName[panelIndex]
+    setTitle(panelName);
+    switch (panelName) {
+      case "Home":
         setMain(<Home />);
         break;
-      case "calendar":
+      case "Calendar":
         setMain(<Calendar />);
         break;
-      case "whiteboard":
+      case "Projects":
         setMain(<Projects />);
         break;
       default:
         setMain(<Home />);
         break;
     }
-    
   }
 
   return (
-    <div>
-      <Box
-          component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        >
+    <>
+      <Box component="nav">
         <Menu changePanel={changePanel} />
       </Box>
-      <Box component='main' sx={{p: 2, float:'right', width: { sm: `calc(100% - ${drawerWidth}px)` }}}>
-        {main}
+      <Box
+        component='main'
+        sx={{
+          p: 2,
+          float: 'right',
+          height: '100%',
+          width: { sm: `calc(100% - ${drawerWidth + 30}px)` },
+          bgcolor: 'black'
+        }}>
+        <Typography
+          variant='h2'
+          align='center'
+          gutterBottom={true}
+          sx={{ color: 'white', bgcolor: 'black', fontWeight: 5 }}>
+          {title}
+        </Typography>
+        <Box 
+          sx={{ 
+            bgcolor: 'white', 
+            height: '80%', 
+            borderRadius: 1, 
+            'overflow-y': 'auto',
+            p: 2 }}>
+          {main}
+        </Box>
       </Box>
-      
-    </div>
+    </>
   );
 }
 

@@ -9,8 +9,12 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { ListItemSecondaryAction } from '@mui/material';
 import React from 'react';
+import dayjs from 'dayjs';
+
+
 
 
 function ProjectToDo(props) {
@@ -26,29 +30,14 @@ function ProjectToDo(props) {
         props.updateTodo(props.id, 'delete')
     }
 
+    const deadline = dayjs(props.deadline).tz(props.timezone)
+
     const getDisplayTime = () => {
-        var displayTime = "";
-
-        const date = new Date(props.deadline);
-        // add offest in seconds
-        date.setSeconds(date.getSeconds()+timeZoneOffset)
-
-        var h = date.getHours(); // 0 - 23
-        var m = date.getMinutes(); // 0 - 59
-
-        h = (h < 10) ? "0" + h : h;
-        m = (m < 10) ? "0" + m : m;
-
-        var y = date.getFullYear();// year
-        var mon = date.getMonth()+1;// month
-        var d = date.getDate();// day
-
-        mon = (mon < 10) ? "0" + mon : mon;
-        d = (d < 10) ? "0" + d : d;
-
-        displayTime = h + ":" + m + " " + d + "/" + mon + "/" + y;
+        const displayTime = deadline.format('HH:mm DD/MM');
         return displayTime;
     }
+
+    const isOverdue = props.deadline && dayjs().tz().isAfter(deadline) && !props.completed
     
 
 
@@ -79,6 +68,7 @@ function ProjectToDo(props) {
                     disableRipple
                     // onClick={updateCompleted}
                     />
+                    {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
                 </ListItemIcon>
                 {/* <label for={props.id}>{props.task}</label> */}
                 <ListItemText>

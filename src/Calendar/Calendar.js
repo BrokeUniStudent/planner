@@ -1,4 +1,5 @@
-
+import CalendarBase from './CalendarBase.js';
+import { Typography } from '@mui/material';
 
 function Calendar(props){
     
@@ -7,7 +8,7 @@ function Calendar(props){
 
     return (
         <div className='calendar'>
-            <h1>Calendar</h1>
+            <CalendarBase />
         </div>
     );
 }

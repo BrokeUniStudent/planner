@@ -6,6 +6,7 @@ import List from '@mui/material/List';
 import Card from '@mui/material/Card';
 import { Typography } from '@mui/material';
 import { Paper } from '@mui/material';
+import { projects } from '../Data/projects';
 
 
 function Project(props){
@@ -16,6 +17,7 @@ function Project(props){
     const [rename, setRename] = useState(false);
     const [newName, setNewName] = useState(project);
     const [add, setAdd] = useState(false);
+    const [color, setColor] = useState(projects.propject);
 
     const deleteProject = () => {
         props.updateProject(project, "delete")
