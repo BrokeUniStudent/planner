@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { timezones } from '../Data/timezones.js';
+import TimeZonePicker from '../Micellenous/TimeZonePicker.js';
 
 export var timeZoneOffset = 0
 
@@ -13,13 +14,10 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 
 function Home() {
-    var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     const [time, setTime] = useState();
     const [calendarDate, setCalendarDate] = useState();
-    const [value, setValue] = useState(`${localTimeZone},${timezones[localTimeZone]}GMT`);
-
-    const listTimeZones = Object.entries(timezones).map((region, offset) => `${region}GMT`);
+    const [region, setRegion] = useState();
 
     useEffect(() => {
         setTimeout(updateTime, 1000);
@@ -31,11 +29,9 @@ function Home() {
     }
 
     useEffect(() => { 
-        if (value) { 
-            const region = value.split(",")[0];
-            console.log(region);
-            dayjs.tz.setDefault(region); }
-    }, [value])
+        console.log(region);
+        dayjs.tz.setDefault(region); 
+    }, [region])
 
 
     return (
@@ -47,20 +43,9 @@ function Home() {
                     <Typography variant='h2' align="center">{time}</Typography>
                 </Grid>
 
-
                 <Grid item xs={3}>
-
                     <Typography variant="h6">Time Zone</Typography>
-                    <Autocomplete
-                        disablePortal
-                        options={listTimeZones}
-                        renderInput={(params) => <TextField {...params} />}
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
-                        size='small'
-                    />
+                    <TimeZonePicker setRegion={setRegion} />
                 </Grid>
             </Grid>
             <HomeToDoList type="day" />

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Project from './Project';
 import { IconButton, Typography } from '@mui/material';
 import { Box, Button } from '@mui/material';
-import { CreateDeadline } from '../Windows/CreateDeadline';
+import CreateProject from '../Windows/CreateProject.js';
 
 function Projects() {
     const [todos, setTodos] = useState(listTodos);
@@ -123,7 +123,7 @@ function Projects() {
                 />)
             }
             )}
-            <CreateDeadline open={open} handleClose={handleClose} />
+            <CreateProject open={open} handleClose={handleClose} />
         </>
     );
 }

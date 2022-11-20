@@ -1,6 +1,5 @@
 import './ProjectToDo.css'
 import { useState } from 'react';
-import { timeZoneOffset } from '../Home/Home';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -11,15 +10,25 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { ListItemSecondaryAction } from '@mui/material';
-import React from 'react';
 import dayjs from 'dayjs';
-
-
-
+import { CreateDeadline } from '../Windows/CreateDeadline';
 
 function ProjectToDo(props) {
 
-    // const [completed, setCompleted] = useState(props.completed);
+    const [completed, setCompleted] = useState(props.completed);
+    const [openPanel, setOpenPanel] = useState(false);
+
+    const handleChange = (event) => {
+        setCompleted(event.target.checked);
+    };
+
+    const handleClose = () => {
+        setOpenPanel(false);
+    }
+
+    const handleOpen = () => {
+        setOpenPanel(true);
+    }
 
     const updateCompleted = () => {
         // setCompleted(prev => !prev);
@@ -38,47 +47,44 @@ function ProjectToDo(props) {
     }
 
     const isOverdue = props.deadline && dayjs().tz().isAfter(deadline) && !props.completed
-    
-
 
     return (
-        <ListItemButton role={undefined} dense onClick={updateCompleted}>
-        <ListItem 
-            className='projectToDo' 
-            key={props.key} 
-            secondaryAction={
-                <ListItemSecondaryAction>
-                    {/* <IconButton edge="end" aria-label="delete" onClick={updateDelete}>
+        <>
+            <ListItemButton role={undefined} dense>
+                <ListItem
+                    className='projectToDo'
+                    key={props.key}
+                    secondaryAction={
+                        <ListItemSecondaryAction>
+                            {/* <IconButton edge="end" aria-label="delete" onClick={updateDelete}>
                         <DeleteIcon />
                     </IconButton> */}
-                    <IconButton edge="end" aria-label="edit">
-                        <EditIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
-            }
-        >
-            {/* <input type="radio" id={props.id} onClick={handleClick} checked={props.completed} className={props.completed ? "completed" : null} /> */}
-            {/* <input type="radio" key={props.id} onClick={updateCompleted} checked={props.completed} className={props.completed ? "completed" : null} /> */}
-            
-                <ListItemIcon>
-                    <Checkbox
-                    edge="start"
-                    checked={props.completed}
-                    tabIndex={-1}
-                    disableRipple
-                    // onClick={updateCompleted}
-                    />
-                    {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
-                </ListItemIcon>
-                {/* <label for={props.id}>{props.task}</label> */}
-                <ListItemText>
-                    {props.task}
-                    {props.deadline ? <p>{getDisplayTime()}</p>: null}
-                </ListItemText>
-                {/* <button className='deleteTodo' onClick={updateDelete}>X</button> */}
-            
-        </ListItem>
-        </ListItemButton>
+                            <IconButton edge="end" aria-label="edit">
+                                <EditIcon onClick={handleOpen} />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    }
+                >
+                    <ListItemIcon>
+                        <Checkbox
+                            edge="start"
+                            checked={props.completed}
+                            tabIndex={-1}
+                            disableRipple
+                            onClick={updateCompleted}
+                        />
+                        {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
+                    </ListItemIcon>
+                    <ListItemText>
+                        {props.task}
+                        {props.deadline ? <p>{getDisplayTime()}</p> : null}
+                    </ListItemText>
+                    {/* <button className='deleteTodo' onClick={updateDelete}>X</button> */}
+                </ListItem>
+            </ListItemButton>
+            <CreateDeadline open={openPanel} handleClose={handleClose} />
+        </>
+
     );
 }
 

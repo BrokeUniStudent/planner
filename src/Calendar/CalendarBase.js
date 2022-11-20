@@ -46,13 +46,13 @@ export default function CalendarBase(props) {
 
 
     return (
-        <Paper sx={{ height: '100%' }}>
+        <>
             <Grid container columns={6}>
                 <Grid item xs={1}>
                     <Button fullWidth size='large' sx={{ height: '100%' }} color='inherit' onClick={goLast}>{'<'}</Button>
                 </Grid>
                 <Grid item xs={4}>
-                    <Typography variant='h3' gutterbottom align='center'>{`${selectedYear} ${months[selectedMonth]}`}</Typography>
+                    <Typography variant='h3' align='center'>{`${selectedYear} ${months[selectedMonth]}`}</Typography>
                 </Grid>
 
                 <Grid item xs={1}>
@@ -67,11 +67,11 @@ export default function CalendarBase(props) {
 
             </AppBar> */}
             <Grid container columns={7}>
-                {weekdays.map(weekday => <Grid item xs={1}><Typography variant='h6'>{weekday}</Typography></Grid>)}
-                {emptyCells.map(() => <Grid item xs={1}></Grid>)}
+                {weekdays.map(weekday => <Grid item xs={1} sx={{border: 1, textAlign: 'center'}}><Typography variant='h6'>{weekday}</Typography></Grid>)}
+                {emptyCells.map(() => <Grid item xs={1} sx={{border: 1}} />)}
                 {listOfDays.map(day => <Cell date={dayjs(`${selectedYear}-${selectedMonth+1}-${day}`)} />)}
             </Grid>
-        </Paper>
+        </>
 
     )
 }

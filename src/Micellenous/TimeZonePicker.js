@@ -1,24 +1,23 @@
-import { MenuItem, Typography, Select, Autocomplete, TextField, Grid } from '@mui/material';
-import { useState, useEffect, useRef } from 'react';
-import HomeToDoList from './HomeToDoList.js';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import { Autocomplete, TextField } from '@mui/material';
 import { timezones } from '../Data/timezones.js';
+import { useState, useEffect, useRef } from 'react';
+
 
 export default function TimeZonePicker(props) {
-    var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+    var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const [value, setValue] = useState(`${localTimeZone},${timezones[localTimeZone]}GMT`);
+
 
     const listTimeZones = Object.entries(timezones).map((region, offset) => `${region}GMT`);
 
-    useEffect(() => { 
-        if (value) { 
+    useEffect(() => {
+        if (value) {
             const region = value.split(",")[0];
-            console.log(region);
-            dayjs.tz.setDefault(region); }
-    }, [value])
+            props.setRegion(region);
+        }
+    }, [value]);
+
     return (
         <Autocomplete
             disablePortal
@@ -28,6 +27,7 @@ export default function TimeZonePicker(props) {
             onChange={(event, newValue) => {
                 setValue(newValue);
             }}
+            // sx={{ maxWidth: 350 }}
             size='small'
         />
     )

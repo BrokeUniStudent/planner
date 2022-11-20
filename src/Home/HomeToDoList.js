@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './HomeToDoList.css';
 import HomeToDo from "./HomeToDo.js"
 import todoList from './../Data/todos.json';
-import { List } from '@mui/material';
+import { List, Box } from '@mui/material';
 import dayjs from 'dayjs';
 import { CommentsDisabledOutlined } from '@mui/icons-material';
 
@@ -60,7 +60,9 @@ function HomeToDoList(props) {
             {/* title */}
             <h1 className='homeToDoList'>{(props.type === "day") ? "Today..." : "In a week..."}</h1>
             {/* todos */}
-            {listTodos.map(todo => <HomeToDo todo={todo} key={todo.id} type={props.type} updateToDo={updateToDo} />)}
+            <Box sx={{ overflowY: 'auto', height: 100 }}>
+                {listTodos.map(todo => <HomeToDo todo={todo} key={todo.id} type={props.type} updateToDo={updateToDo} />)}
+            </Box>
         </List>
     );
 }
