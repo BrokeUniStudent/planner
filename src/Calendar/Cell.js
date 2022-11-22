@@ -3,7 +3,7 @@ import todos from './../Data/todos.json';
 import dayjs from "dayjs";
 import Mark from './Mark.js';
 import getLocalDeadline from "../functions/getLocalDeadline";
-import { grey } from '@mui/material/colors';
+import { grey, blue } from '@mui/material/colors';
 
 export default function Cell(props) {
     const tasks = todos.filter(task => 
@@ -14,9 +14,9 @@ export default function Cell(props) {
     const isPast = props.date.isBefore(dayjs(), 'day');
     let cellColor = 'white';
     if (isPast) {
-        cellColor = grey[400];
-    } else if (props.date.isSame(dayjs())) {
-        cellColor = 'light blue';
+        cellColor = grey[200];
+    } else if (props.date.isSame(dayjs(), 'day')) {
+        cellColor = '#CEE8FB';
     }
 
     return (
@@ -24,7 +24,7 @@ export default function Cell(props) {
             <Box sx={{ position: 'relative', bottom: 0, top: -5, height: 105, border: 1, borderTop: 0 }}>
                 <Grid container columns={7} sx={{ height: '100%' }} columnSpacing={0.5} >
                     <Grid item xs={2}>
-                        <Typography variant='h6' sx={{ pt: 1, pl: 1 }}>{cellNumber}</Typography>
+                        <Typography variant='h6' sx={{ pt: 1, pl: 1, color: (isPast? grey[500]: 'black') }}>{cellNumber}</Typography>
                     </Grid>
 
                     {/* tasks.length > 4? */}

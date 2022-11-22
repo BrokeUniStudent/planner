@@ -42,7 +42,7 @@ function Project(props){
     }
 
     return (
-        <Paper className='project' sx={{width: 300, pt: 2, mx:3, float: 'left', bgcolor: projects[project]}}>
+        <Paper className='project' sx={{width: 300, pt: 2, bgcolor: projects[project], height:'fit-content'}}>
             {rename ? 
                 <input placeholder={project} onChange={handleChange} value={newName} /> : 
                 <Typography variant='h4' align='center'>{project}</Typography>}   

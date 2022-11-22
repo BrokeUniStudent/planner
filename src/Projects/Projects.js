@@ -2,7 +2,7 @@ import './Projects.css';
 import listTodos from './../Data/todos.json';
 import { useState, useEffect } from 'react';
 import Project from './Project';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import { Box, Button } from '@mui/material';
 import CreateProject from '../Windows/CreateProject.js';
 
@@ -113,7 +113,9 @@ function Projects() {
                     sx={{borderRight: '1px solid', borderRadius: 0}}
                     onClick={handleClickOpen}>+</Button>
             </Box>
-            {listProjects.map(project => {
+            <Box sx={{width: '100%', overflowY: 'auto'}}>
+                <Stack direction='row' spacing={2} sx={{width: 350 * listProjects.length}}>
+                {listProjects.map(project => {
                 {/* console.log(project + dictProjects[project]) */ }
                 return (<Project
                     key={dictProjectKey[project]}
@@ -123,6 +125,10 @@ function Projects() {
                 />)
             }
             )}
+            </Stack>
+            </Box>
+            
+            
             <CreateProject open={open} handleClose={handleClose} />
         </>
     );

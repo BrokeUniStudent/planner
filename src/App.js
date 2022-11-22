@@ -66,7 +66,7 @@ function App() {
             bgcolor: 'white', 
             height: '80%', 
             borderRadius: 1, 
-            'overflow-y': 'auto',
+            overflow: 'auto',
             p: 2 }}>
           {main}
         </Box>

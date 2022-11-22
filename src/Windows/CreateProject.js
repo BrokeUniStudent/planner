@@ -7,12 +7,21 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { SketchPicker } from '@hello-pangea/color-picker';
+import { useRef } from 'react';
 
 
 
 export default function CreateProject(props) {
     if (props.task) {
         
+    }
+
+    const titleRef = useRef('');
+    const colorRef = useRef('');
+
+    const handleSubmit = (e) => {
+        alert(titleRef.current, colorRef.current);
+        props.handleClose();
     }
 
     return (
@@ -31,6 +40,7 @@ export default function CreateProject(props) {
                             // margin="dense"
                             fullWidth
                             variant="standard"
+                            ref={titleRef}
                         />
                     </Grid>
                     <Grid item xs={1}>
@@ -39,13 +49,13 @@ export default function CreateProject(props) {
                         </DialogContentText>
                     </Grid>
                     <Grid item xs={3}>
-                        <SketchPicker />
+                        <SketchPicker ref={colorRef} />
                     </Grid>
                 </Grid>
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={props.handleClose}>Create</Button>
+                <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     )
