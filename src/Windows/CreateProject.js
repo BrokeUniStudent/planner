@@ -7,28 +7,27 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { SketchPicker } from '@hello-pangea/color-picker';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { addProject } from '../Data/functions';
 
 
 
 export default function CreateProject(props) {
-    if (props.task) {
-        
-    }
 
     const titleRef = useRef('');
-    const colorRef = useRef('');
+    const [color, setColor] = useState('#194d33');
 
     const handleSubmit = (e) => {
-        alert(titleRef.current, colorRef.current);
-        props.handleClose();
+        if (addProject(titleRef.current.value, color)){
+            props.handleClose();
+        };
     }
 
     return (
         <Dialog open={props.open} onClose={props.handleClose} maxWidth='xs'>
             <DialogTitle>New Project</DialogTitle>
             <DialogContent>
-                <Grid container columns={4}>
+                <Grid container columns={4} rowSpacing={1}>
 
                     <Grid item xs={1}>
                         <DialogContentText>
@@ -37,10 +36,9 @@ export default function CreateProject(props) {
                     </Grid>
                     <Grid item xs={3}>
                         <TextField
-                            // margin="dense"
                             fullWidth
                             variant="standard"
-                            ref={titleRef}
+                            inputRef={titleRef}
                         />
                     </Grid>
                     <Grid item xs={1}>
@@ -49,7 +47,7 @@ export default function CreateProject(props) {
                         </DialogContentText>
                     </Grid>
                     <Grid item xs={3}>
-                        <SketchPicker ref={colorRef} />
+                        <SketchPicker color={color} onChangeComplete={(color, e) => {setColor(color)}} />
                     </Grid>
                 </Grid>
             </DialogContent>

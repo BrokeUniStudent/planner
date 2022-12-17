@@ -1,11 +1,12 @@
 import { Grid, Box, Typography } from "@mui/material";
-import todos from './../Data/todos.json';
 import dayjs from "dayjs";
 import Mark from './Mark.js';
 import getLocalDeadline from "../functions/getLocalDeadline";
 import { grey, blue } from '@mui/material/colors';
+import { getDeadlines } from "../Data/functions.js";
 
 export default function Cell(props) {
+    const todos = getDeadlines();
     const tasks = todos.filter(task => 
         task.deadline && 
         props.date.isSame(getLocalDeadline(task.deadline, task.timezone), 'day')

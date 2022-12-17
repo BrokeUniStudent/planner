@@ -1,31 +1,29 @@
 import './Projects.css';
-import listTodos from './../Data/todos.json';
 import { useState, useEffect } from 'react';
 import Project from './Project';
 import { IconButton, Stack, Typography } from '@mui/material';
 import { Box, Button } from '@mui/material';
 import CreateProject from '../Windows/CreateProject.js';
+import { getDeadlines, getProjectNames } from '../Data/functions';
 
 function Projects() {
+
+    const listTodos = getDeadlines();
     const [todos, setTodos] = useState(listTodos);
 
     // console.log(todos[0]);
 
 
-    // var listProjects = [];
+    // var listProjectNames = [];
     // var dictProjects = {};
     // var dictProjectKey = {}
 
     // get a list of all projects
-    var listProjects = []
-    todos.map(todo => {
-        listProjects.push(todo.project);
-    })
-    listProjects = [... new Set(listProjects)];
-    // console.log(listProjects);
+    var listProjectNames = getProjectNames();
+    // console.log(listProjectNames);
 
     var dictProjects = {}
-    listProjects.forEach((project) => {
+    listProjectNames.forEach((project) => {
         dictProjects[project] = []
     })
     // console.log(dictProjects);
@@ -35,8 +33,8 @@ function Projects() {
     // console.log(dictProjects);
 
     var dictProjectKey = {}
-    for (let i = 0; i < listProjects.length; i++) {
-        dictProjectKey[listProjects[i]] = i;
+    for (let i = 0; i < listProjectNames.length; i++) {
+        dictProjectKey[listProjectNames[i]] = i;
     }
 
     var updatedTodos = todos;
@@ -74,7 +72,7 @@ function Projects() {
             case "add":
                 break;
             case "rename":
-                if (listProjects.includes(payload)) {
+                if (listProjectNames.includes(payload)) {
                     alert("Two projects cannot have the same name");
                     return
                 }
@@ -114,8 +112,8 @@ function Projects() {
                     onClick={handleClickOpen}>+</Button>
             </Box>
             <Box sx={{width: '100%', overflowY: 'auto'}}>
-                <Stack direction='row' spacing={2} sx={{width: 350 * listProjects.length}}>
-                {listProjects.map(project => {
+                <Stack direction='row' spacing={2} sx={{width: 350 * listProjectNames.length}}>
+                {listProjectNames.map(project => {
                 {/* console.log(project + dictProjects[project]) */ }
                 return (<Project
                     key={dictProjectKey[project]}

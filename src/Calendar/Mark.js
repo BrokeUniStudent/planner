@@ -7,7 +7,11 @@ import TaskDetails from  './TaskDetails.js'
 export default function Mark(props) {
 
     const getMarkColor = () => {
-        return props.task.completed ? grey[600] : projects[props.task.project];
+        return props.task.completed ? grey[600] : projects[props.task.project].hex;
+    }
+
+    const getTextColor = () => {
+        return props.task.completed ? 'white': 'black';
     }
 
     const [open, setOpen] = useState(false);
@@ -24,15 +28,14 @@ export default function Mark(props) {
                 sx={{
                     height: '50%',
                     bgcolor: getMarkColor(),
-                    width: '100%'
-                    // width: 15
+                    // width: '100%'
+                    width: 15,
                 }}
                 onMouseOver={handleHover}
-                // onMouseLeave={handleHover}
             />
             <Popper open={open} anchorEl={anchorEl} disablePortal container={document.getElementById('calendar')} sx={{zIndex: 1}} >
                 <Card sx={{ bgcolor: getMarkColor(), width: 440}}>
-                    <CardContent sx={{ color: (props.isPast ? 'white' : 'black') }}>
+                    <CardContent sx={{ color: getTextColor() }}>
                         <TaskDetails task={props.task} />
                     </CardContent>
                 </Card>

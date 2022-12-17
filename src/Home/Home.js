@@ -1,5 +1,5 @@
 // import './Home.css';
-import { MenuItem, Typography, Select, Autocomplete, TextField, Grid } from '@mui/material';
+import { Stack, Typography, Box, Autocomplete, TextField, Grid } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import HomeToDoList from './HomeToDoList.js';
 import dayjs from 'dayjs';
@@ -36,18 +36,22 @@ function Home() {
 
     return (
         <>
-            <Grid container columns={6}>
+            <Stack 
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+            >
+                    <Typography variant='h2' align="center">
+                        {calendarDate}
+                        <br />
+                        {time}
+                    </Typography>
 
-                <Grid item xs={3}>
-                    <Typography variant='h2' align="center">{calendarDate}</Typography>
-                    <Typography variant='h2' align="center">{time}</Typography>
-                </Grid>
-
-                <Grid item xs={3}>
-                    <Typography variant="h6">Time Zone</Typography>
-                    <TimeZonePicker setRegion={setRegion} />
-                </Grid>
-            </Grid>
+                    <Box>
+                        <Typography variant="h6" minWidth='fit-content'>Time Zone</Typography>
+                        <TimeZonePicker setRegion={setRegion} />
+                    </Box>
+                    
+            </Stack>
             <HomeToDoList type="day" />
             <HomeToDoList type="week" />
         </>

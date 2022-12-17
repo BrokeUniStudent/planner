@@ -5,7 +5,8 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function TimeZonePicker(props) {
 
-    var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var localTimeZone = props.defaultValue ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     const [value, setValue] = useState(`${localTimeZone},${timezones[localTimeZone]}GMT`);
 
 
@@ -27,7 +28,7 @@ export default function TimeZonePicker(props) {
             onChange={(event, newValue) => {
                 setValue(newValue);
             }}
-            // sx={{ maxWidth: 350 }}
+            sx={{ minWidth: 350 }}
             size='small'
         />
     )

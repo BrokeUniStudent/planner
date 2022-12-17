@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -14,9 +13,16 @@ import Grid from '@mui/material/Grid';
 import { timezones } from '../Data/timezones.js';
 import TimeZonePicker from '../Micellenous/TimeZonePicker.js';
 import InputLabel from '@mui/material/InputLabel';
-
+import { addDeadline, addProject, getProjectNames } from '../Data/functions';
+import { useRef } from 'react';
 
 export function CreateDeadline(props) {
+
+    const titleRef = useRef();
+    const projectRef = useRef();
+    const timeRef = useRef();
+    const descriptionRef = useRef();
+    const timezoneRef = useRef();
 
     // reuse with task in props for default values
 
@@ -24,11 +30,23 @@ export function CreateDeadline(props) {
 
     }
 
-    const listProjects = Object.keys(projects);
+    const handleSubmit = () => {
+        let result;
+        if (!props.task) {
+            result = addDeadline(titleRef.current.value, projectRef.current.value, timeRef.current.value, timezoneRef.current.value, descriptionRef.current.value);
+        } else {
+            result = 
+        }
+        result ?? props.handleClose();
+
+        
+    }
+
+    const listProjects = getProjectNames();
 
     return (
         <Dialog open={props.open} onClose={props.handleClose} fullWidth>
-            <DialogTitle>Create a deadline</DialogTitle>
+            <DialogTitle>{props.task ? 'Edit': 'Create'} a deadline</DialogTitle>
             <DialogContent>
 
                 <Grid container columns={6}>
@@ -39,9 +57,10 @@ export function CreateDeadline(props) {
                     </Grid>
                     <Grid item xs={2}>
                         <TextField
-                            // margin="dense"
                             fullWidth
                             variant="standard"
+                            inputRef={titleRef}
+                            defaultValue={props.task.task}
                         />
                     </Grid>
 
@@ -53,8 +72,13 @@ export function CreateDeadline(props) {
                         </DialogContentText>
                     </Grid>
                     <Grid item xs={2}>
-                        <Select defaultValue={listProjects[0]} fullWidth>
-                            {listProjects.map(projectName => <MenuItem>{projectName}</MenuItem>)}
+                        <Select 
+                            inputRef={projectRef} 
+                            defaultValue={props.task.project} 
+                            fullWidth
+                        >
+                            {listProjects.map(projectName => 
+                                <MenuItem value={projectName}>{projectName}</MenuItem>)}
                         </Select>
                     </Grid>
                 </Grid>
@@ -70,24 +94,26 @@ export function CreateDeadline(props) {
                 </DialogContentText>
                 <TextField
                     type="datetime-local"
-                    defaultValue="2017-05-24T10:30"
+                    defaultValue={props.task.deadline}
+                    inputRef={timeRef}
                     size='small'
                 />
 
                 <DialogContentText>
                     Time Zone
                 </DialogContentText>
-                <TimeZonePicker setRegion={setRegion} />
+                <TimeZonePicker setRegion={setRegion} defaultValue={props.task.timezone} />
 
                 <DialogContentText>
                     Description
                 </DialogContentText>
-                <TextField multiline={true} fullWidth />
+                <TextField multiline={true} fullWidth inputRef={descriptionRef} defaultValue={props.task.description} />
 
             </DialogContent>
+        
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={props.handleClose}>Create</Button>
+                <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     );

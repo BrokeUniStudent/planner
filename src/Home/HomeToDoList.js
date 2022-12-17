@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import './HomeToDoList.css';
 import HomeToDo from "./HomeToDo.js"
-import todoList from './../Data/todos.json';
 import { List, Box } from '@mui/material';
 import dayjs from 'dayjs';
 import { CommentsDisabledOutlined } from '@mui/icons-material';
+import { getDeadlines } from '../Data/functions';
 
 function HomeToDoList(props) {
 
-    const [todos, setTodos] = useState(todoList);
+    const [todos, setTodos] = useState(getDeadlines());
 
     const oneDay = 1000 * 60 * 60 * 24;
 

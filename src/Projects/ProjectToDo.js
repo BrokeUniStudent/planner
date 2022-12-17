@@ -9,9 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import { ListItemSecondaryAction } from '@mui/material';
+import { ListItemSecondaryAction, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { CreateDeadline } from '../Windows/CreateDeadline';
+import EditDeadlineButton from '../Micellenous/EditDeadlineButton';
 
 function ProjectToDo(props) {
 
@@ -59,9 +60,7 @@ function ProjectToDo(props) {
                             {/* <IconButton edge="end" aria-label="delete" onClick={updateDelete}>
                         <DeleteIcon />
                     </IconButton> */}
-                            <IconButton edge="end" aria-label="edit">
-                                <EditIcon onClick={handleOpen} />
-                            </IconButton>
+                            <EditDeadlineButton task={props} />
                         </ListItemSecondaryAction>
                     }
                 >
@@ -76,13 +75,12 @@ function ProjectToDo(props) {
                         {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
                     </ListItemIcon>
                     <ListItemText>
-                        {props.task}
-                        {props.deadline ? <p>{getDisplayTime()}</p> : null}
+                        <Typography variant='body1'>{props.task}</Typography>
+                        {props.deadline ? getDisplayTime() : null}
                     </ListItemText>
                     {/* <button className='deleteTodo' onClick={updateDelete}>X</button> */}
                 </ListItem>
             </ListItemButton>
-            <CreateDeadline open={openPanel} handleClose={handleClose} />
         </>
 
     );
