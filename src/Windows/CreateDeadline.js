@@ -34,12 +34,8 @@ export function CreateDeadline(props) {
         let result;
         if (!props.task) {
             result = addDeadline(titleRef.current.value, projectRef.current.value, timeRef.current.value, timezoneRef.current.value, descriptionRef.current.value);
-        } else {
-            result = 
         }
         result ?? props.handleClose();
-
-        
     }
 
     const listProjects = getProjectNames();
@@ -78,15 +74,15 @@ export function CreateDeadline(props) {
                             fullWidth
                         >
                             {listProjects.map(projectName => 
-                                <MenuItem value={projectName}>{projectName}</MenuItem>)}
+                                <MenuItem value={projectName} key={projectName}>{projectName}</MenuItem>)}
                         </Select>
                     </Grid>
                 </Grid>
 
 
 
-                <DialogContentText>
-                    <Typography variant='h6'>Attend Time: </Typography>
+                <DialogContentText variant='h6'>
+                    Attend Time:
                 </DialogContentText>
 
                 <DialogContentText>
@@ -113,7 +109,7 @@ export function CreateDeadline(props) {
         
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>Create</Button>
+                <Button onClick={handleSubmit}>{props.task ? 'Edit': 'Create'}</Button>
             </DialogActions>
         </Dialog>
     );

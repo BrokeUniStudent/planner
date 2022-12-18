@@ -8,14 +8,16 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { SketchPicker } from '@hello-pangea/color-picker';
 import { useRef, useState } from 'react';
-import { addProject } from '../Data/functions';
+import { addProject, getProjectColor, getProjectColorFull } from '../Data/functions';
 
 
 
 export default function CreateProject(props) {
 
+    const defaultColor = props.project ? getProjectColor(props.project) : '#194d33'
+
     const titleRef = useRef('');
-    const [color, setColor] = useState('#194d33');
+    const [color, setColor] = useState(defaultColor);
 
     const handleSubmit = (e) => {
         if (addProject(titleRef.current.value, color)){
@@ -39,6 +41,7 @@ export default function CreateProject(props) {
                             fullWidth
                             variant="standard"
                             inputRef={titleRef}
+                            defaultValue={props.project}
                         />
                     </Grid>
                     <Grid item xs={1}>
@@ -47,13 +50,16 @@ export default function CreateProject(props) {
                         </DialogContentText>
                     </Grid>
                     <Grid item xs={3}>
-                        <SketchPicker color={color} onChangeComplete={(color, e) => {setColor(color)}} />
+                        <SketchPicker 
+                            color={color} 
+                            onChangeComplete={(color, e) => {setColor(color)}} 
+                        />
                     </Grid>
                 </Grid>
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>Create</Button>
+                <Button onClick={handleSubmit}>{props.project ? 'Edit': 'Create'}</Button>
             </DialogActions>
         </Dialog>
     )

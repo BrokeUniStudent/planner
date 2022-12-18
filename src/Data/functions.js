@@ -28,6 +28,12 @@ export function getProjectColor(title) {
     return project.hsl;
 }
 
+export function getProjectColorFull(title) {
+    const projects = getProjects();
+    const project = projects[title];
+    return project;
+}
+
 // get all project names
 export function getProjectNames() {
     return Object.keys(getProjects());
@@ -39,14 +45,14 @@ export function deleteProject(title){
 }
 
 // update a project by title
-export function updateProject(title, color) {
+export function updateProject(oldTitle, title, color) {
     if (!title) {
         alert('Title cannot be empty');
     } else if (getProjectNames().includes(title)) {
         alert('There already exist a project with that title. Would you like to change the color of the project?');
     } else {
         const project = {title: title, color: color};
-        projects[title]
+        projects[oldTitle] = project
         return true;
     }
     return false;

@@ -11,7 +11,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { ListItemSecondaryAction, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import { CreateDeadline } from '../Windows/CreateDeadline';
 import EditDeadlineButton from '../Micellenous/EditDeadlineButton';
 
 function ProjectToDo(props) {
@@ -50,38 +49,33 @@ function ProjectToDo(props) {
     const isOverdue = props.deadline && dayjs().tz().isAfter(deadline) && !props.completed
 
     return (
-        <>
-            <ListItemButton role={undefined} dense>
-                <ListItem
-                    className='projectToDo'
-                    key={props.key}
-                    secondaryAction={
-                        <ListItemSecondaryAction>
-                            {/* <IconButton edge="end" aria-label="delete" onClick={updateDelete}>
+        <ListItem
+            className='projectToDo'
+            
+            secondaryAction={
+                <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete" onClick={updateDelete}>
                         <DeleteIcon />
-                    </IconButton> */}
-                            <EditDeadlineButton task={props} />
-                        </ListItemSecondaryAction>
-                    }
-                >
-                    <ListItemIcon>
-                        <Checkbox
-                            edge="start"
-                            checked={props.completed}
-                            tabIndex={-1}
-                            disableRipple
-                            onClick={updateCompleted}
-                        />
-                        {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography variant='body1'>{props.task}</Typography>
-                        {props.deadline ? getDisplayTime() : null}
-                    </ListItemText>
-                    {/* <button className='deleteTodo' onClick={updateDelete}>X</button> */}
-                </ListItem>
-            </ListItemButton>
-        </>
+                    </IconButton>
+                    <EditDeadlineButton task={props} />
+                </ListItemSecondaryAction>
+            }
+        >
+            <ListItemIcon>
+                <Checkbox
+                    edge="start"
+                    checked={props.completed}
+                    tabIndex={-1}
+                    disableRipple
+                    onClick={updateCompleted}
+                />
+                {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
+            </ListItemIcon>
+            <ListItemText sx={{pr: 5, maxWidth: 200}}>
+                <Typography variant='h6'>{props.task}</Typography>
+                {props.deadline ? getDisplayTime() : null}
+            </ListItemText>
+        </ListItem>
 
     );
 }

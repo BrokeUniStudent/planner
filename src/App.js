@@ -1,4 +1,3 @@
-// import './App.css';
 import Menu from './Menu/Menu.js'
 import Home from './Home/Home.js'
 import Projects from './Projects/Projects.js'
@@ -6,7 +5,21 @@ import Calendar from './Calendar/Calendar.js'
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import { ForkRight } from '@mui/icons-material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: 'Bai Jamjuree',
+    },
+    h1: {
+      fontWeight: 2,
+    },
+    h2: {
+      fontWeight: 5,
+    }
+  },
+});
 
 function App() {
   const [main, setMain] = useState(<Home />);
@@ -41,7 +54,7 @@ function App() {
   }
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Box component="nav">
         <Menu changePanel={changePanel} />
       </Box>
@@ -57,8 +70,7 @@ function App() {
         <Typography
           variant='h2'
           align='center'
-          gutterBottom={true}
-          sx={{ color: 'white', bgcolor: 'black', fontWeight: 5 }}>
+          sx={{ color: 'white', bgcolor: 'black' }}>
           {title}
         </Typography>
         <Box 
@@ -67,12 +79,11 @@ function App() {
             height: '80%', 
             borderRadius: 1, 
             overflowY: 'auto',
-            width: '100%',
             p: 2 }}>
           {main}
         </Box>
       </Box>
-    </>
+    </ThemeProvider>
   );
 }
 

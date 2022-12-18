@@ -38,7 +38,9 @@ function Home() {
         <>
             <Stack 
                 direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 1, sm: 2, md: 4 }}
+                spacing={{ xs: 5, sm: 2, md: 4 }}
+                justifyContent="center"
+                alignItems="center"
             >
                     <Typography variant='h2' align="center">
                         {calendarDate}

@@ -4,6 +4,8 @@ import isLeapYear from 'dayjs/plugin/isLeapYear';
 import { Paper, Typography, Button } from '@mui/material';
 import { useState } from 'react';
 import Cell from './Cell';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function Calendar(props) {
 
@@ -49,14 +51,19 @@ export default function Calendar(props) {
         <div id='calendar'>
             <Grid container columns={6}>
                 <Grid item xs={1}>
-                    <Button fullWidth size='large' sx={{ height: '100%' }} color='inherit' onClick={goLast}>{'<'}</Button>
+                    <Button fullWidth size='large' sx={{ height: '100%' }} color='inherit' onClick={goLast}>
+                        <ArrowBackIosNewIcon />
+                    </Button>
                 </Grid>
+                
                 <Grid item xs={4}>
                     <Typography variant='h3' align='center'>{`${selectedYear} ${months[selectedMonth]}`}</Typography>
                 </Grid>
 
                 <Grid item xs={1}>
-                    <Button fullWidth size='large' sx={{ height: '100%' }} color='inherit' onClick={goNext}>{'>'}</Button>
+                    <Button fullWidth size='large' sx={{ height: '100%' }} color='inherit' onClick={goNext}>
+                        <ArrowForwardIosIcon />
+                    </Button>
                 </Grid>
 
             </Grid>
@@ -67,9 +74,9 @@ export default function Calendar(props) {
 
             </AppBar> */}
             <Grid container columns={7}>
-                {weekdays.map(weekday => <Grid item xs={1} sx={{border: 1, textAlign: 'center'}}><Typography variant='h6'>{weekday}</Typography></Grid>)}
+                {weekdays.map(weekday => <Grid item xs={1} sx={{border: 1, textAlign: 'center'}} key={weekday}><Typography variant='h6'>{weekday}</Typography></Grid>)}
                 {emptyCells.map(() => <Grid item xs={1} sx={{border: 1}} />)}
-                {listOfDays.map(day => <Cell date={dayjs(`${selectedYear}-${selectedMonth+1}-${day}`)} />)}
+                {listOfDays.map(day => <Cell date={dayjs(`${selectedYear}-${selectedMonth+1}-${day}`)} key={day} />)}
             </Grid>
         </div>
 

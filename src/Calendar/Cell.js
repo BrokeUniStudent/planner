@@ -21,7 +21,7 @@ export default function Cell(props) {
     }
 
     return (
-        <Grid item xs={1} key={cellNumber} sx={{ height: 100, bgcolor: cellColor }}>
+        <Grid item xs={1} sx={{ height: 100, bgcolor: cellColor }}>
             <Box sx={{ position: 'relative', bottom: 0, top: -5, height: 105, border: 1, borderTop: 0 }}>
                 <Grid container columns={7} sx={{ height: '100%' }} columnSpacing={0.5} >
                     <Grid item xs={2}>
