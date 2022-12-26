@@ -4,7 +4,7 @@ import HomeToDo from "./HomeToDo.js"
 import { List, Box } from '@mui/material';
 import dayjs from 'dayjs';
 import { CommentsDisabledOutlined } from '@mui/icons-material';
-import { getDeadlines } from '../Data/functions';
+import { getDeadlines, updateCompleted } from '../Data/functions';
 
 function HomeToDoList(props) {
 
@@ -49,19 +49,29 @@ function HomeToDoList(props) {
 
     const updateToDo = (id) => {
 
-        setTodos(prevTodos => {
-            prevTodos[id].completed = !(prevTodos[id].completed);
-            return prevTodos;
-        })
+        // setTodos(prevTodos => {
+        //     prevTodos[id].completed = !(prevTodos[id].completed);
+        //     return prevTodos;
+        // })
+
+        updateCompleted(id);
     }
 
     return (
         <List className='homeToDoList'>
             {/* title */}
-            <h1 className='homeToDoList'>{(props.type === "day") ? "Today..." : "In a week..."}</h1>
+            <h1 className='homeToDoList'>
+                {(props.type === "day") ? "Today..." : "In a week..."}
+            </h1>
             {/* todos */}
             <Box sx={{ overflowY: 'auto', height: 100 }}>
-                {listTodos.map(todo => <HomeToDo todo={todo} key={todo.id} type={props.type} updateToDo={updateToDo} />)}
+                {listTodos.map(todo => 
+                    <HomeToDo 
+                        todo={todo} 
+                        key={todo.id} 
+                        type={props.type} 
+                        updateToDo={updateToDo} 
+                    />)}
             </Box>
         </List>
     );

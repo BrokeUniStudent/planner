@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { timezones } from '../Data/timezones.js';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 
 export default function TimeZonePicker(props) {

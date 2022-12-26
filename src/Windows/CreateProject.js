@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { SketchPicker } from '@hello-pangea/color-picker';
 import { useRef, useState } from 'react';
-import { addProject, getProjectColor, getProjectColorFull } from '../Data/functions';
+import { addProject, updateProject, getProjectColor, getProjectColorFull } from '../Data/functions';
 
 
 
@@ -20,14 +20,20 @@ export default function CreateProject(props) {
     const [color, setColor] = useState(defaultColor);
 
     const handleSubmit = (e) => {
-        if (addProject(titleRef.current.value, color)){
+        let result;
+        if (props.project){
+            result = updateProject(props.project, titleRef.current.value, color)
+        } else {
+            result = addProject(titleRef.current.value, color);
+        }
+        if (result){
             props.handleClose();
         };
     }
 
     return (
         <Dialog open={props.open} onClose={props.handleClose} maxWidth='xs'>
-            <DialogTitle>New Project</DialogTitle>
+            <DialogTitle>{props.project ? 'New': 'Edit'} Project</DialogTitle>
             <DialogContent>
                 <Grid container columns={4} rowSpacing={1}>
 

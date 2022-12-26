@@ -2,7 +2,7 @@
   {
     "id": 0,
     "task": "Give dog a bath",
-    "deadline": "2022-11-19T03:24:00",
+    "deadline": "2022-12-25T03:24:00",
     "project": "Chores",
     "completed": true, 
     "timezone": "Europe/London",
@@ -11,7 +11,7 @@
   {
     "id": 1,
     "task": "Do laundry",
-    "deadline": "2022-06-23T03:24:00",
+    "deadline": "2022-12-25T03:25:00",
     "project": "Chores",
     "completed": false
   },

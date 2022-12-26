@@ -3,55 +3,88 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { projects } from '../Data/projects';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { timezones } from '../Data/timezones.js';
 import TimeZonePicker from '../Micellenous/TimeZonePicker.js';
-import InputLabel from '@mui/material/InputLabel';
-import { addDeadline, addProject, getProjectNames } from '../Data/functions';
-import { useRef } from 'react';
+import { addDeadline, getProjectNames, updateDeadline } from '../Data/functions';
+import { useRef, useState, useEffect } from 'react';
 
 export function CreateDeadline(props) {
+
+    const [checked, setChecked] = useState(props.task.deadline ? true : false);
+
 
     const titleRef = useRef();
     const projectRef = useRef();
     const timeRef = useRef();
     const descriptionRef = useRef();
-    const timezoneRef = useRef();
-
-    // reuse with task in props for default values
-
-    const setRegion = (region) => {
-
-    }
+    let region = props.task.timezone;
 
     const handleSubmit = () => {
+        const formValues =
+            [
+                titleRef.current.value,
+                projectRef.current.value,
+                checked ? timeRef.current.value : null,
+                checked ? region : null,
+                descriptionRef.current.value
+            ]
+
         let result;
-        if (!props.task) {
-            result = addDeadline(titleRef.current.value, projectRef.current.value, timeRef.current.value, timezoneRef.current.value, descriptionRef.current.value);
+        if (!props.task.title) {
+            result = addDeadline(...formValues);
+        } else {
+            result = updateDeadline(props.task.id, ...formValues)
         }
-        result ?? props.handleClose();
+        if (result) {props.handleClose()};
     }
 
     const listProjects = getProjectNames();
 
+    const timeForm =
+        <>
+            <DialogContentText variant='h6' sx={{ mt: 2 }}>
+                Attend Time:
+            </DialogContentText>
+
+            <DialogContentText>
+                Event Time
+            </DialogContentText>
+            <TextField
+                type="datetime-local"
+                defaultValue={checked ? props.task.deadline : null}
+                inputRef={timeRef}
+                size='small'
+            />
+
+            <DialogContentText>
+                Time Zone
+            </DialogContentText>
+            <TimeZonePicker 
+                setRegion={value => {region = value}} 
+                defaultValue={checked ? props.task.timezone : null} 
+            />
+
+        </>
+
+
     return (
         <Dialog open={props.open} onClose={props.handleClose} fullWidth>
-            <DialogTitle>{props.task ? 'Edit': 'Create'} a deadline</DialogTitle>
+            <DialogTitle>{props.task.task ? 'Edit' : 'Create'} a task</DialogTitle>
             <DialogContent>
 
-                <Grid container columns={6}>
-                    <Grid item xs={0.5}>
-                        <DialogContentText>
-                            Title
-                        </DialogContentText>
+                <Grid container columns={6} direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+
+                    <Grid item xs={1}>
+                        <DialogContentText>Title</DialogContentText>
                     </Grid>
-                    <Grid item xs={2}>
+
+                    <Grid item xs={5}>
                         <TextField
                             fullWidth
                             variant="standard"
@@ -60,56 +93,59 @@ export function CreateDeadline(props) {
                         />
                     </Grid>
 
-                    <Grid item xs={0.5}></Grid>
-
                     <Grid item xs={1}>
                         <DialogContentText>
-                            From Project
+                            Project
                         </DialogContentText>
                     </Grid>
                     <Grid item xs={2}>
-                        <Select 
-                            inputRef={projectRef} 
-                            defaultValue={props.task.project} 
+                        <Select
+                            inputRef={projectRef}
+                            defaultValue={props.task.project}
                             fullWidth
+                            size='small'
                         >
-                            {listProjects.map(projectName => 
+                            {listProjects.map(projectName =>
                                 <MenuItem value={projectName} key={projectName}>{projectName}</MenuItem>)}
                         </Select>
                     </Grid>
+
+                    <Grid item xs={1}>
+                        <DialogContentText align='center'>
+                            Type
+                        </DialogContentText>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Box minWidth={100} align='center'>
+                            Note
+                            <Switch
+                                checked={checked}
+                                onChange={() => { setChecked(prevChecked => !prevChecked) }}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                            Deadline
+                        </Box>
+                    </Grid>
+
                 </Grid>
-
-
-
-                <DialogContentText variant='h6'>
-                    Attend Time:
-                </DialogContentText>
-
-                <DialogContentText>
-                    Event Time
-                </DialogContentText>
-                <TextField
-                    type="datetime-local"
-                    defaultValue={props.task.deadline}
-                    inputRef={timeRef}
-                    size='small'
-                />
-
-                <DialogContentText>
-                    Time Zone
-                </DialogContentText>
-                <TimeZonePicker setRegion={setRegion} defaultValue={props.task.timezone} />
 
                 <DialogContentText>
                     Description
                 </DialogContentText>
-                <TextField multiline={true} fullWidth inputRef={descriptionRef} defaultValue={props.task.description} />
+                <TextField
+                    multiline={true}
+                    fullWidth
+                    inputRef={descriptionRef}
+                    defaultValue={props.task.description}
+                />
+
+                {checked ? timeForm : null}
 
             </DialogContent>
-        
+
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>{props.task ? 'Edit': 'Create'}</Button>
+                <Button onClick={handleSubmit}>{props.task.task ? 'Edit' : 'Create'}</Button>
             </DialogActions>
         </Dialog>
     );

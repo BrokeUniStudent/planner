@@ -16,7 +16,8 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 
 function HomeToDo(props) {
 
-    const [todo, setTodo] = useState(props.todo);
+    // const [todo, setTodo] = useState(props.todo);
+    const todo = props.todo;
 
     const handleClick = () => {
         // update the selected todo
@@ -30,32 +31,27 @@ function HomeToDo(props) {
     if (props.type === "day") {
         displayTime = deadline.format('HH:MM')
     } else {
-        displayTime = deadline.format('YYYY/MM/DD ddd');
+        displayTime = deadline.format('YYYY/MM/DD ddd HH:MM');
     }
 
-    
 
     const isOverdue = dayjs().tz().isAfter(deadline) && !props.todo.completed
 
 
 
     return (
-        <ListItemButton className='homeToDo' onClick={handleClick}>
-            {/* <input type="radio" id={todo.id} onClick={handleClick} checked={todo.completed} className={todo.completed ? "completed" : null} />
-            <label for={todo.id}>{todo.task}</label>
-            <p>{displayTime}</p> */}
+        <ListItemButton className='homeToDo' onClick={handleClick} sx={{ py: 0 }}>
             <ListItemIcon>
                 <Checkbox
                     edge="start"
                     checked={todo.completed}
                     tabIndex={-1}
                     disableRipple
-                // onClick={updateCompleted}
                 />
                 {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
             </ListItemIcon>
             <ListItemText>
-                
+
                 {todo.task}
             </ListItemText>
             <ListItemText>{todo.deadline ? <p>{displayTime}</p> : null}</ListItemText>

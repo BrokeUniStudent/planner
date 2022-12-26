@@ -2,9 +2,9 @@ import Menu from './Menu/Menu.js'
 import Home from './Home/Home.js'
 import Projects from './Projects/Projects.js'
 import Calendar from './Calendar/Calendar.js'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -21,11 +21,24 @@ const theme = createTheme({
   },
 });
 
-function App() {
-  const [main, setMain] = useState(<Home />);
-  const [title, setTitle] = useState('Home');
+let main = <Home />;
 
-  const drawerWidth = 200;
+function setPanelElement(title) {
+  switch (title) {
+    case "Calendar":
+      main = (<Calendar />);
+      break;
+    case "Projects":
+      main = (<Projects />);
+      break;
+    default:
+      main = (<Home />);
+      break;
+  }
+}
+
+function App() {
+  const [title, setTitle] = useState('Home');
 
   const panelIndexToName = {
     0: 'Home',
@@ -34,55 +47,56 @@ function App() {
   }
 
   const changePanel = (panelIndex) => {
-    // console.log(panelName);
     const panelName = panelIndexToName[panelIndex]
     setTitle(panelName);
-    switch (panelName) {
-      case "Home":
-        setMain(<Home />);
-        break;
-      case "Calendar":
-        setMain(<Calendar />);
-        break;
-      case "Projects":
-        setMain(<Projects />);
-        break;
-      default:
-        setMain(<Home />);
-        break;
-    }
+    setPanelElement(panelName);
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <Box component="nav">
-        <Menu changePanel={changePanel} />
-      </Box>
-      <Box
-        component='main'
-        sx={{
-          p: 2,
-          float: 'right',
-          height: '100%',
-          width: { sm: `calc(100% - ${drawerWidth + 30}px)` },
-          bgcolor: 'black'
-        }}>
-        <Typography
-          variant='h2'
-          align='center'
-          sx={{ color: 'white', bgcolor: 'black' }}>
-          {title}
-        </Typography>
-        <Box 
-          sx={{ 
-            bgcolor: 'white', 
-            height: '80%', 
-            borderRadius: 1, 
-            overflowY: 'auto',
-            p: 2 }}>
-          {main}
-        </Box>
-      </Box>
+
+      <Grid container>
+
+        <Grid item xs='auto'>
+          <Box
+            p={2}
+            position='relative'
+            top='20%'
+          >
+            <Menu changePanel={changePanel} />
+          </Box>
+
+        </Grid>
+
+        <Grid item xs>
+          <Box
+            // eslint-disable-next-line
+            minHeight={screen.availHeight}
+            p={2}
+          >
+            <Typography
+              variant='h2'
+              align='center'
+              className='title'
+              color='white'
+            >
+              {title}
+            </Typography>
+            <Box
+            // eslint-disable-next-line
+              minHeight={screen.availHeight - 50}
+              minWidth={50*7}
+              sx={{
+                bgcolor: 'white',
+                borderRadius: 1,
+                p: 2
+              }}>
+              {main}
+            </Box>
+          </Box>
+        </Grid>
+
+      </Grid>
     </ThemeProvider>
   );
 }

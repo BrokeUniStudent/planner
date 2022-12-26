@@ -105,28 +105,35 @@ function Projects() {
 
     return (
         <>
-            <Box sx={{width: '100%', borderBottom: '1px solid', mb: 5}}>
-                <Button 
-                    color='inherit' 
-                    sx={{borderRight: '1px solid', borderRadius: 0}}
+            <Box sx={{ width: '100%', borderBottom: '1px solid', mb: 5 }}>
+                <Button
+                    color='inherit'
+                    sx={{ borderRight: '1px solid', borderRadius: 0 }}
                     onClick={handleClickOpen}>+</Button>
             </Box>
-            <Box sx={{width: '100%', overflowY: 'auto'}}>
-                <Stack direction='row' spacing={2} sx={{width: 350 * listProjectNames.length}}>
-                {listProjectNames.map(project => {
-                {/* console.log(project + dictProjects[project]) */ }
-                return (<Project
-                    key={dictProjectKey[project]}
-                    listTodos={dictProjects[project]}
-                    updateTodo={updateTodo}
-                    updateProject={updateProject}
-                />)
-            }
-            )}
-            </Stack>
+            <Box 
+                minHeight={screen.availHeight - 100}// eslint-disable-line
+                sx={{ width: '100%', overflow: 'auto'}}
+            >
+                <Stack 
+                    direction={{ xs: 'column', sm: 'row' }} 
+                    spacing={2} 
+                    // sx={{ width: 350 * listProjectNames.length }}
+                >
+                    {listProjectNames.map(project => {
+                        {/* console.log(project + dictProjects[project]) */ }
+                        return (<Project
+                            key={dictProjectKey[project]}
+                            listTodos={dictProjects[project]}
+                            updateTodo={updateTodo}
+                            updateProject={updateProject}
+                        />)
+                    }
+                    )}
+                </Stack>
             </Box>
-            
-            
+
+
             <CreateProject open={open} handleClose={handleClose} />
         </>
     );

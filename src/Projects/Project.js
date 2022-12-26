@@ -48,7 +48,7 @@ function Project(props) {
         <>
             <Draggable nodeRef={nodeRef}>
                 <Paper
-                    sx={{ bgcolor: titleColor, height: 'fit-content', p: 1.5, width: 500 }}
+                    sx={{ bgcolor: titleColor, height: 'fit-content', p: 1.5, minWidth: 250 }}
                     onDoubleClick={handleClickMenu}
                     ref={nodeRef}
                 >

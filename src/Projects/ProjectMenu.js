@@ -81,6 +81,5 @@ export default function ProjectMenu(props) {
                 project={props.project}
              />
         </>
-
     )
 }

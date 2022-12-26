@@ -1,7 +1,8 @@
-import { Grid, Box, Typography, Popper, Card, CardContent, Checkbox, IconButton } from "@mui/material";
+import { Grid, Typography, Checkbox } from "@mui/material";
 import getLocalDeadline from '../functions/getLocalDeadline.js';
 import { useState } from "react";
 import EditDeadlineButton from '../Micellenous/EditDeadlineButton.js';
+import { updateCompleted } from "../Data/functions.js";
 
 export default function TaskDetails(props) {
 
@@ -9,9 +10,8 @@ export default function TaskDetails(props) {
 
     const handleChange = (event) => {
         setCompleted(event.target.checked);
+        updateCompleted(props.task.id)
     };
-
-
 
     return (
         <>

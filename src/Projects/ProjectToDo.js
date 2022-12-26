@@ -1,42 +1,26 @@
 import './ProjectToDo.css'
-import { useState } from 'react';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { ListItemSecondaryAction, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import EditDeadlineButton from '../Micellenous/EditDeadlineButton';
+import { deleteDeadline } from '../Data/functions';
 
 function ProjectToDo(props) {
 
-    const [completed, setCompleted] = useState(props.completed);
-    const [openPanel, setOpenPanel] = useState(false);
-
-    const handleChange = (event) => {
-        setCompleted(event.target.checked);
-    };
-
-    const handleClose = () => {
-        setOpenPanel(false);
-    }
-
-    const handleOpen = () => {
-        setOpenPanel(true);
-    }
-
     const updateCompleted = () => {
-        // setCompleted(prev => !prev);
-        props.updateTodo(props.id, "completed");
+        // props.updateTodo(props.id, "completed");
+        updateCompleted(props.id);
     }
 
     const updateDelete = () => {
-        props.updateTodo(props.id, 'delete')
+        // props.updateTodo(props.id, 'delete')
+        deleteDeadline(props.id)
     }
 
     const deadline = dayjs(props.deadline).tz(props.timezone)

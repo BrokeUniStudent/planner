@@ -1,8 +1,8 @@
 import { projects } from './../Data/projects.js';
-import { Grid, Box, Typography, Popper, Card, CardContent, PopperUnstyled } from "@mui/material";
+import { Grid, Box, Typography, Paper, Popper, Card, CardContent, PopperUnstyled } from "@mui/material";
 import { useState } from 'react';
 import { grey } from '@mui/material/colors';
-import TaskDetails from  './TaskDetails.js'
+import TaskDetails from './TaskDetails.js'
 
 export default function Mark(props) {
 
@@ -11,7 +11,7 @@ export default function Mark(props) {
     }
 
     const getTextColor = () => {
-        return props.task.completed ? 'white': 'black';
+        return props.task.completed ? 'white' : 'black';
     }
 
     const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function Mark(props) {
 
     return (
         <Grid item xs={1}>
-            <Box
+            <Card
                 sx={{
                     height: '50%',
                     bgcolor: getMarkColor(),
@@ -33,8 +33,8 @@ export default function Mark(props) {
                 }}
                 onMouseOver={handleHover}
             />
-            <Popper open={open} anchorEl={anchorEl} disablePortal container={document.getElementById('calendar')} sx={{zIndex: 1}} >
-                <Card sx={{ bgcolor: getMarkColor(), width: 440}}>
+            <Popper open={open} anchorEl={anchorEl} disablePortal container={document.getElementById('calendar')} sx={{ zIndex: 1 }} >
+                <Card sx={{ bgcolor: getMarkColor(), width: 440 }}>
                     <CardContent sx={{ color: getTextColor() }}>
                         <TaskDetails task={props.task} />
                     </CardContent>
