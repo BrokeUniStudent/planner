@@ -14,26 +14,33 @@ import { addProject, updateProject, getProjectColor, getProjectColorFull } from 
 
 export default function CreateProject(props) {
 
-    const defaultColor = props.project ? getProjectColor(props.project) : '#194d33'
+    console.log(props.project)
+
+    const defaultColor = props.project ? getProjectColor(props.project) : 
+    {
+        hex: '#ffffff',
+        rgb: { r: 225, g: 225, b: 225, a: 1, },
+        hsl: { h: 0, s: 0, l: 100, a: 1 },
+    }
 
     const titleRef = useRef('');
     const [color, setColor] = useState(defaultColor);
 
     const handleSubmit = (e) => {
         let result;
-        if (props.project){
+        if (props.project) {
             result = updateProject(props.project, titleRef.current.value, color)
         } else {
             result = addProject(titleRef.current.value, color);
         }
-        if (result){
+        if (result) {
             props.handleClose();
         };
     }
 
     return (
         <Dialog open={props.open} onClose={props.handleClose} maxWidth='xs'>
-            <DialogTitle>{props.project ? 'New': 'Edit'} Project</DialogTitle>
+            <DialogTitle>{props.project ? 'Edit' : 'New'} Project</DialogTitle>
             <DialogContent>
                 <Grid container columns={4} rowSpacing={1}>
 
@@ -56,16 +63,16 @@ export default function CreateProject(props) {
                         </DialogContentText>
                     </Grid>
                     <Grid item xs={3}>
-                        <SketchPicker 
-                            color={color} 
-                            onChangeComplete={(color, e) => {setColor(color)}} 
+                        <SketchPicker
+                            color={color}
+                            onChangeComplete={(color, e) => { setColor(color) }}
                         />
                     </Grid>
                 </Grid>
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>{props.project ? 'Edit': 'Create'}</Button>
+                <Button onClick={handleSubmit}>{props.project ? 'Edit' : 'Create'}</Button>
             </DialogActions>
         </Dialog>
     )
