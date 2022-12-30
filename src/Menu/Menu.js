@@ -4,6 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import { useState } from 'react';
+import { SketchPicker } from '@hello-pangea/color-picker';
 
 
 function Menu(props) {
@@ -42,8 +43,15 @@ function Menu(props) {
             onClick={(event) => handleClick(event, 2)}>
             <ListItemText primary='Calendar' />
           </ListItemButton>
-
         </Box>
+
+        <SketchPicker
+          color={localStorage['backgroundColor'] || '#ffffff'}
+          onChangeComplete={(color, e) => {
+            localStorage['backgroundColor'] = color.hex;
+            document.body.style.background = localStorage['backgroundColor'];
+          }}
+        />
       </List>
     </>
 

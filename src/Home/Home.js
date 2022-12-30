@@ -29,7 +29,7 @@ function Home() {
     }
 
     useEffect(() => { 
-        console.log(region);
+        // console.log(region);
         dayjs.tz.setDefault(region); 
     }, [region])
 

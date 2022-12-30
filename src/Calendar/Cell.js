@@ -2,7 +2,7 @@ import { Grid, Box, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import Mark from './Mark.js';
 import getLocalDeadline from "../functions/getLocalDeadline";
-import { grey, blue } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 import { getDeadlines } from "../Data/functions.js";
 
 export default function Cell(props) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './HomeToDoList.css';
 import HomeToDo from "./HomeToDo.js"
-import { List, Box } from '@mui/material';
+import { List, Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { CommentsDisabledOutlined } from '@mui/icons-material';
 import { getDeadlines, updateCompleted } from '../Data/functions';
@@ -13,26 +13,6 @@ function HomeToDoList(props) {
     const oneDay = 1000 * 60 * 60 * 24;
 
     const currentTime = dayjs().tz()
-    //check if the deadline is in time range
-    // const isInRange  = (todo) => {
-    //     var currentTime = new Date();
-
-    //     if (todo.deadline){
-    //         var deadline = new Date(todo.deadline);
-    //     } else {
-    //         return false;
-    //     }
-
-    //     // deadline time in ms
-    //     var timeLeft = deadline.valueOf() - currentTime.valueOf();
-    //     if (props.type === "daily"){
-    //         //check if the deadline is today or before today
-    //         return timeLeft < oneDay;
-    //     } else {
-    //         const oneWeek = oneDay * 7
-    //         return ((oneDay < timeLeft) && (timeLeft < oneWeek));
-    //     }
-    // }
 
     const isInRange = (todo) => {
         const deadline = dayjs(todo.deadline).tz(todo.timezone);
@@ -47,30 +27,19 @@ function HomeToDoList(props) {
 
     const listTodos = todos.filter(isInRange);
 
-    const updateToDo = (id) => {
-
-        // setTodos(prevTodos => {
-        //     prevTodos[id].completed = !(prevTodos[id].completed);
-        //     return prevTodos;
-        // })
-
-        updateCompleted(id);
-    }
-
     return (
         <List className='homeToDoList'>
             {/* title */}
-            <h1 className='homeToDoList'>
+            <Typography variant='h4'>
                 {(props.type === "day") ? "Today..." : "In a week..."}
-            </h1>
+            </Typography>
             {/* todos */}
-            <Box sx={{ overflowY: 'auto', height: 100 }}>
-                {listTodos.map(todo => 
-                    <HomeToDo 
-                        todo={todo} 
-                        key={todo.id} 
-                        type={props.type} 
-                        updateToDo={updateToDo} 
+            <Box sx={{ overflowY: 'auto', height: 200 }}>
+                {listTodos.map(todo =>
+                    <HomeToDo
+                        todo={todo}
+                        key={todo.id}
+                        type={props.type}
                     />)}
             </Box>
         </List>

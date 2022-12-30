@@ -9,17 +9,16 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { ListItemSecondaryAction, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import EditDeadlineButton from '../Micellenous/EditDeadlineButton';
-import { deleteDeadline } from '../Data/functions';
+import { deleteDeadline, updateCompleted } from '../Data/functions';
+import CompletionCheckbox from '../Micellenous/CompletionCheckbox';
 
 function ProjectToDo(props) {
 
-    const updateCompleted = () => {
-        // props.updateTodo(props.id, "completed");
-        updateCompleted(props.id);
-    }
+    // const updateTodoCompleted = () => {
+    //     updateCompleted(props.id);
+    // }
 
     const updateDelete = () => {
-        // props.updateTodo(props.id, 'delete')
         deleteDeadline(props.id)
     }
 
@@ -46,13 +45,14 @@ function ProjectToDo(props) {
             }
         >
             <ListItemIcon>
-                <Checkbox
+                {/* <Checkbox
                     edge="start"
                     checked={props.completed}
                     tabIndex={-1}
                     disableRipple
-                    onClick={updateCompleted}
-                />
+                    onClick={updateTodoCompleted}
+                /> */}
+                <CompletionCheckbox task={props} />
                 {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
             </ListItemIcon>
             <ListItemText sx={{pr: 5, maxWidth: 200}}>

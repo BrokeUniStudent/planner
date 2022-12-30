@@ -36,7 +36,7 @@ export function CreateDeadline(props) {
             ]
 
         let result;
-        if (!props.task.title) {
+        if (!props.task.task) {
             result = addDeadline(...formValues);
         } else {
             result = updateDeadline(props.task.id, ...formValues)

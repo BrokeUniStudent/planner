@@ -2,9 +2,10 @@ import './HomeToDo.css';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
 import dayjs from 'dayjs';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import CompletionCheckbox from '../Micellenous/CompletionCheckbox';
+import { useState } from 'react';
 
 // dayjs.extend(utc)
 // dayjs.extend(timezone)
@@ -13,11 +14,6 @@ function HomeToDo(props) {
 
     // const [todo, setTodo] = useState(props.todo);
     const todo = props.todo;
-
-    const handleClick = () => {
-        // update the selected todo
-        props.updateToDo(todo.id);
-    }
 
     var displayTime = "";
 
@@ -30,23 +26,23 @@ function HomeToDo(props) {
     }
 
 
-    const isOverdue = dayjs().tz().isAfter(deadline) && !props.todo.completed
-
-
+    
+    const [isOverdue, setIsOverdue] = useState(dayjs().tz().isAfter(deadline) && !props.todo.completed)
+    // const isOverdue = dayjs().tz().isAfter(deadline) && !props.todo.completed
 
     return (
-        <ListItemButton className='homeToDo' onClick={handleClick} sx={{ py: 0 }}>
+        <ListItemButton className='homeToDo' sx={{ py: 0 }} disableRipple>
             <ListItemIcon>
-                <Checkbox
+                {/* <Checkbox
                     edge="start"
                     checked={todo.completed}
                     tabIndex={-1}
                     disableRipple
-                />
+                /> */}
+                <CompletionCheckbox task={todo} />
                 {isOverdue ? <PriorityHighIcon fontSize="large" color="error" /> : null}
             </ListItemIcon>
             <ListItemText>
-
                 {todo.task}
             </ListItemText>
             <ListItemText>{todo.deadline ? <p>{displayTime}</p> : null}</ListItemText>

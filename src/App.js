@@ -86,6 +86,8 @@ function App() {
             // eslint-disable-next-line
               minHeight={screen.availHeight - 50}
               minWidth={50*7}
+            // eslint-disable-next-line
+              maxWidth={screen.availWidth - 350}
               sx={{
                 bgcolor: 'white',
                 borderRadius: 1,

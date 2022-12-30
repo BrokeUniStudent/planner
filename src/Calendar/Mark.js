@@ -1,13 +1,13 @@
-import { projects } from './../Data/projects.js';
 import { Grid, Box, Typography, Paper, Popper, Card, CardContent, PopperUnstyled } from "@mui/material";
 import { useState } from 'react';
 import { grey } from '@mui/material/colors';
-import TaskDetails from './TaskDetails.js'
+import TaskDetails from './TaskDetails.js';
+import { getProjectColorFull } from "../Data/functions.js";
 
 export default function Mark(props) {
 
     const getMarkColor = () => {
-        return props.task.completed ? grey[600] : projects[props.task.project].hex;
+        return props.task.completed ? grey[600] : getProjectColorFull(props.task.project).hex;
     }
 
     const getTextColor = () => {

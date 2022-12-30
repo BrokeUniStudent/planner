@@ -14,8 +14,6 @@ import { addProject, updateProject, getProjectColor, getProjectColorFull } from 
 
 export default function CreateProject(props) {
 
-    console.log(props.project)
-
     const defaultColor = props.project ? getProjectColor(props.project) : 
     {
         hex: '#ffffff',
